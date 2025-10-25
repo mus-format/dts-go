@@ -4,15 +4,16 @@
 [![GoReportCard](https://goreportcard.com/badge/mus-format/dts-go)](https://goreportcard.com/report/github.com/mus-format/dts-go)
 [![codecov](https://codecov.io/gh/mus-format/dts-go/graph/badge.svg?token=VB6E8M2PFE)](https://codecov.io/gh/mus-format/dts-go)
 
-dts-go provides [DTM](https://medium.com/p/21d7be309e8d) support for the mus-go 
+**dts-go** provides [DTM](https://medium.com/p/21d7be309e8d) support for the `mus-go`
 serializer (DTS stands for Data Type metadata Support).
 
-dts-go is particularly useful when deserializing data with an unpredictable 
-type. This could include completely different types, such as `Foo` and `Bar`, or
-different versions of the same data, such as `FooV1` and `FooV2`.
+`dts-go` is particularly useful when deserializing data with an unpredictable
+type. This could include completely different types, such as `Foo` and `Bar`,
+or different versions of the same data, such as `FooV1` and `FooV2`.
 
-It encodes a DTM (which is simply a number) along with the data itself, allowing 
-one type to be easily distinguished from another. Let’s see how:
+It encodes a DTM (which is simply a number) along with the data itself,
+allowing one type to be easily distinguished from another. Let’s see how:
+
 ```go
 package main
 
@@ -77,4 +78,5 @@ func main() {
 
 func randomData() (bs []byte) {...}
 ```
-A full example can be found at [mus-examples-go](https://github.com/mus-format/mus-examples-go/tree/main/dts)
+
+A full example can be found at [examples-go](https://github.com/mus-format/examples-go/tree/main/dts)
