@@ -9,7 +9,6 @@ import (
 )
 
 func TestDTS(t *testing.T) {
-
 	t.Run("Marshal, Unmarshal, Size, Skip methods should work correctly",
 		func(t *testing.T) {
 			var (
@@ -38,7 +37,6 @@ func TestDTS(t *testing.T) {
 			if n1 != n {
 				t.Errorf("unexpected n1, want '%v' actual '%v'", n, n1)
 			}
-
 		})
 
 	t.Run("Marshal, UnmarshalDTM, UnmarshalData, Size, SkipDTM, SkipData methods should work correctly",
@@ -187,5 +185,4 @@ func TestDTS(t *testing.T) {
 				t.Errorf("unexpected n, want '%v' actual '%v'", 0, n)
 			}
 		})
-
 }

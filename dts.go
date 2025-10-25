@@ -1,3 +1,6 @@
+// Package dts provides DTM (Deterministic Type Marker) support for mus-go
+// serializer. It wraps a mus-go serializer together with a DTM value,
+// enabling serialization of data with an embedded type marker.
 package dts
 
 import (
@@ -10,7 +13,7 @@ func New[T any](dtm com.DTM, ser mus.Serializer[T]) DTS[T] {
 	return DTS[T]{dtm, ser}
 }
 
-// DTM implements the mus.Serializer interface and provides DTM support for the
+// DTS implements the mus.Serializer interface and provides DTM support for the
 // mus-go serializer. It helps to serializer DTM + data.
 type DTS[T any] struct {
 	dtm com.DTM
