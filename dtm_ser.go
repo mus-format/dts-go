@@ -5,6 +5,8 @@ import (
 	"github.com/mus-format/mus-go/varint"
 )
 
+// DTMSer serializes DTM values. It implements the mus.Serializer[com.DTM]
+// interface.
 var DTMSer = dtmSer{}
 
 type dtmSer struct{}
