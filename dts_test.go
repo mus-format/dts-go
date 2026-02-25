@@ -4,17 +4,17 @@ import (
 	"testing"
 
 	com "github.com/mus-format/common-go"
-	"github.com/mus-format/dts-go/testdata"
+	"github.com/mus-format/dts-go/testutil"
 	"github.com/mus-format/mus-go"
 	asserterror "github.com/ymz-ncnk/assert/error"
 )
 
 func TestDTS(t *testing.T) {
-	t.Run("Marshal, Unmarshal, Size, Skip methods should work correctly",
+	t.Run("Marshal, Unmarshal, Size, Skip methods should succeed",
 		func(t *testing.T) {
 			var (
-				foo    = testdata.Foo{Num: 11, Str: "hello world"}
-				fooDTS = New[testdata.Foo](testdata.FooDTM, testdata.FooSer)
+				foo    = testutil.Foo{Num: 11, Str: "hello world"}
+				fooDTS = New[testutil.Foo](testutil.FooDTM, testutil.FooSer)
 				bs     = make([]byte, fooDTS.Size(foo))
 			)
 			n := fooDTS.Marshal(foo, bs)
@@ -30,12 +30,12 @@ func TestDTS(t *testing.T) {
 			asserterror.Equal(n, n1, t)
 		})
 
-	t.Run("Marshal, UnmarshalDTM, UnmarshalData, Size, SkipDTM, SkipData methods should work correctly",
+	t.Run("Marshal, UnmarshalDTM, UnmarshalData, Size, SkipDTM, SkipData methods should succeed",
 		func(t *testing.T) {
 			var (
 				wantDTSize = 1
-				foo        = testdata.Foo{Num: 11, Str: "hello world"}
-				fooDTS     = New[testdata.Foo](testdata.FooDTM, testdata.FooSer)
+				foo        = testutil.Foo{Num: 11, Str: "hello world"}
+				fooDTS     = New[testutil.Foo](testutil.FooDTM, testutil.FooSer)
 				bs         = make([]byte, fooDTS.Size(foo))
 			)
 			n := fooDTS.Marshal(foo, bs)
@@ -43,7 +43,7 @@ func TestDTS(t *testing.T) {
 
 			dtm, n, err := DTMSer.Unmarshal(bs)
 			asserterror.EqualError(err, nil, t)
-			asserterror.Equal(dtm, testdata.FooDTM, t)
+			asserterror.Equal(dtm, testutil.FooDTM, t)
 			asserterror.Equal(n, wantDTSize, t)
 
 			afoo, n1, err := fooDTS.UnmarshalData(bs[n:])
@@ -62,40 +62,40 @@ func TestDTS(t *testing.T) {
 
 	t.Run("DTM method should return correct DTM", func(t *testing.T) {
 		var (
-			fooDTS = New[testdata.Foo](testdata.FooDTM, nil)
+			fooDTS = New[testutil.Foo](testutil.FooDTM, nil)
 			dtm    = fooDTS.DTM()
 		)
-		asserterror.Equal(dtm, testdata.FooDTM, t)
+		asserterror.Equal(dtm, testutil.FooDTM, t)
 	})
 
 	t.Run("Unamrshal should fail with ErrWrongDTM, if meets another DTM",
 		func(t *testing.T) {
 			var (
-				actualDTM = testdata.FooDTM + 3
+				actualDTM = testutil.FooDTM + 3
 
 				wantDTSize = 1
-				wantErr    = com.NewWrongDTMError(testdata.FooDTM, actualDTM)
+				wantErr    = com.NewWrongDTMError(testutil.FooDTM, actualDTM)
 
 				bs     = []byte{byte(actualDTM)}
-				fooDTS = New[testdata.Foo](testdata.FooDTM, nil)
+				fooDTS = New[testutil.Foo](testutil.FooDTM, nil)
 			)
 			foo, n, err := fooDTS.Unmarshal(bs)
 			asserterror.EqualError(err, wantErr, t)
-			asserterror.EqualDeep(foo, testdata.Foo{}, t)
+			asserterror.EqualDeep(foo, testutil.Foo{}, t)
 			asserterror.Equal(n, wantDTSize, t)
 		})
 
 	t.Run("Skip should fail with ErrWrongDTM, if meets another DTM",
 		func(t *testing.T) {
 			var (
-				actualDTM = testdata.FooDTM + 3
+				actualDTM = testutil.FooDTM + 3
 
 				wantDTSize = 1
-				wantErr    = com.NewWrongDTMError(testdata.FooDTM, actualDTM)
+				wantErr    = com.NewWrongDTMError(testutil.FooDTM, actualDTM)
 
-				dtm    = testdata.FooDTM + 3
+				dtm    = testutil.FooDTM + 3
 				bs     = []byte{byte(dtm)}
-				fooDTS = New[testdata.Foo](testdata.FooDTM, nil)
+				fooDTS = New[testutil.Foo](testutil.FooDTM, nil)
 			)
 			n, err := fooDTS.Skip(bs)
 			asserterror.EqualError(err, wantErr, t)
@@ -105,12 +105,12 @@ func TestDTS(t *testing.T) {
 	t.Run("If UnmarshalDTM fails with an error, Unmarshal should return it",
 		func(t *testing.T) {
 			var (
-				wantFoo = testdata.Foo{}
+				wantFoo = testutil.Foo{}
 				wantN   = 0
 				wantErr = mus.ErrTooSmallByteSlice
 
 				bs     = []byte{}
-				fooDTS = New[testdata.Foo](testdata.FooDTM, nil)
+				fooDTS = New[testutil.Foo](testutil.FooDTM, nil)
 			)
 			foo, n, err := fooDTS.Unmarshal(bs)
 			asserterror.EqualError(err, wantErr, t)
@@ -125,7 +125,7 @@ func TestDTS(t *testing.T) {
 				wantErr = mus.ErrTooSmallByteSlice
 
 				bs     = []byte{}
-				fooDTS = New[testdata.Foo](testdata.FooDTM, nil)
+				fooDTS = New[testutil.Foo](testutil.FooDTM, nil)
 			)
 			n, err := fooDTS.Skip(bs)
 			asserterror.EqualError(err, wantErr, t)
