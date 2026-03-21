@@ -1,5 +1,9 @@
 # dts-go
 
+> [!WARNING]
+> This repository is **deprecated**. Its functionality has been merged into the 
+> [mus-go](https://github.com/mus-format/mus-go) module. Please use [mus-go](https://github.com/mus-format/mus-go) instead.
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/mus-format/dts-go.svg)](https://pkg.go.dev/github.com/mus-format/dts-go)
 [![GoReportCard](https://goreportcard.com/badge/mus-format/dts-go)](https://goreportcard.com/report/github.com/mus-format/dts-go)
 [![codecov](https://codecov.io/gh/mus-format/dts-go/graph/badge.svg?token=VB6E8M2PFE)](https://codecov.io/gh/mus-format/dts-go)
